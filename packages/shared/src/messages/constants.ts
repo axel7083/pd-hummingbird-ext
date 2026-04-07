@@ -25,4 +25,5 @@ export const noTimeoutChannels: string[] = [
   getChannel(HummingbirdApi, 'getOptimisationReport'),
   getChannel(AlternativesApi, 'fetchAlternativeVulnerabilities'),
   getChannel(AlternativesApi, 'scanLocalImage'),
+  getChannel(AlternativesApi, 'fetchAlternativeTags'),
 ];

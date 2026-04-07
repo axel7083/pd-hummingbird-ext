@@ -20,6 +20,7 @@ import {
   type LocalImage,
   type LocalImageAlternative,
   type VulnerabilitiesSummary,
+  type Tag,
 } from '@podman-desktop/extension-hummingbird-core-api';
 import type { HummingbirdService } from '../services/hummingbird-service';
 import type { containerEngine } from '@podman-desktop/api';
@@ -71,14 +72,22 @@ export class AlternativesApiImpl extends AlternativesApi {
         if (hummingbirdImageName) {
           const hummingbirdImage = hummingbirdMap.get(hummingbirdImageName);
 
-          // Only add if we have a valid alternative
+          // https://github.com/podman-desktop/podman-desktop/issues/16967
+          if (!('Arch' in image) || typeof image.Arch !== 'string') {
+            console.warn('missing arch on image');
+            continue;
+          }
+
           if (hummingbirdImage) {
+            // Only add if we have a valid alternative
             results.push({
               localImage: {
                 id: image.Id,
                 engineId: image.engineId,
                 name: repo,
                 tag: tag || 'latest',
+                size: image.Size,
+                architecture: image.Arch,
               },
               alternative: hummingbirdImage,
             });
@@ -110,5 +119,12 @@ export class AlternativesApiImpl extends AlternativesApi {
       tag,
     );
     return vulnerabilities.summary;
+  }
+
+  override async fetchAlternativeTags(imageName: string): Promise<Tag[]> {
+    console.log('fetchAlternativeTags', imageName);
+    const { data: tagsResponse } = await this.dependencies.hummingbird.getClient().v1.getTags(imageName);
+    console.log(tagsResponse.tags);
+    return tagsResponse.tags;
   }
 }

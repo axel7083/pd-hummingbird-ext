@@ -15,19 +15,14 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ***********************************************************************/
+import type { PageLoad } from './$types';
 
-import type { ImageSummary } from '../generated/hummingbird-project';
-
-export interface LocalImage {
-  id: string;
-  engineId: string;
-  name: string;
-  tag: string;
-  size: number;
-  architecture: string;
+interface Data {
+  containers: Promise<any>;
 }
 
-export interface LocalImageAlternative {
-  localImage: LocalImage;
-  alternative: ImageSummary;
-}
+export const load: PageLoad = async ({ url, depends }): Promise<Data> => {
+  return {
+
+  };
+};

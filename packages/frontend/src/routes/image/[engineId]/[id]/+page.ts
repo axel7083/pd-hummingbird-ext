@@ -25,7 +25,6 @@ interface Data {
 }
 
 export const load: PageLoad = async ({ params }): Promise<Data> => {
-  console.log('[image/engineId/id/+page.ts]');
   const engineId = decodeURIComponent(params.engineId);
   const imageId = decodeURIComponent(params.id);
 

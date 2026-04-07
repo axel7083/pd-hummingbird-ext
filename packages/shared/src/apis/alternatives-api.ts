@@ -16,7 +16,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ***********************************************************************/
 import type { LocalImage, LocalImageAlternative } from '../models/local-image-alternative';
-import type { VulnerabilitiesSummary } from '../generated/hummingbird-project';
+import type { VulnerabilitiesSummary, Tag } from '../generated/hummingbird-project';
 
 export abstract class AlternativesApi {
   static readonly CHANNEL: string = 'alternatives-api';
@@ -35,4 +35,9 @@ export abstract class AlternativesApi {
    * Fetch alternative image vulnerabilities from Hummingbird API
    */
   abstract fetchAlternativeVulnerabilities(imageName: string, tag: string): Promise<VulnerabilitiesSummary>;
+
+  /**
+   * Fetch alternative image tags with sizes
+   */
+  abstract fetchAlternativeTags(imageName: string): Promise<Tag[]>;
 }

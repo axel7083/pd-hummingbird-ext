@@ -11,8 +11,8 @@ let shortName = $derived(object.localImage.name.split('/').pop() ?? object.local
 let fullPath = $derived(`${object.localImage.name}:${object.localImage.tag}`);
 </script>
 
-<div class="flex flex-col">
-  <div class="text-base font-medium text-[var(--pd-content-header)]">
+<div class="flex flex-col gap-y-1">
+  <div class="text-base font-medium bg-[var(--pd-label-bg)] px-1 py-0.5 rounded-md text-[var(--pd-label-text)] w-fit">
     {shortName}
   </div>
   <div class="text-sm text-[var(--pd-content-text)] opacity-50">

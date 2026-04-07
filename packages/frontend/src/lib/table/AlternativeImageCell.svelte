@@ -10,9 +10,9 @@ let { object }: Props = $props();
 
 <div class="flex flex-col">
   <div class="text-base font-medium text-purple-400">
-    {object.alternative.name}
+    Hummingbird {object.alternative.name}
   </div>
   <div class="text-base text-[var(--pd-content-text)] opacity-50">
-    {object.alternative.latest_tag}
+    quay.io/hummingbird/{object.alternative.name}:{object.alternative.latest_tag}
   </div>
 </div>

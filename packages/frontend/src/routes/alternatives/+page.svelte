@@ -4,11 +4,10 @@ import { alternativesAPI } from '/@/api/client';
 import type { LocalImageAlternative, VulnerabilitiesSummary } from '@podman-desktop/extension-hummingbird-core-api';
 import { onMount } from 'svelte';
 import { faWarning } from '@fortawesome/free-solid-svg-icons/faWarning';
-import { goto } from '$app/navigation';
-import { resolve } from '$app/paths';
 import AlternativeImageCell from '$lib/table/AlternativeImageCell.svelte';
 import LocalImageCell from '$lib/table/LocalImageCell.svelte';
 import CVEReductionCell from '$lib/table/CVEReductionCell.svelte';
+import SizeReductionCell from '$lib/table/SizeReductionCell.svelte';
 import ViewDetailsCell from '$lib/table/ViewDetailsCell.svelte';
 import { SvelteMap } from 'svelte/reactivity';
 
@@ -19,16 +18,25 @@ interface VulnState {
   error?: string;
 }
 
+interface SizeState {
+  localSize?: number;
+  alternativeSize?: number;
+  scanning: boolean;
+  error?: string;
+}
+
 interface AlternativeRow extends LocalImageAlternative {
   name: string;
   selected?: boolean;
   vulnState?: VulnState;
+  sizeState?: SizeState;
 }
 
 let alternatives: LocalImageAlternative[] = $state([]);
 let loading = $state(true);
 let error: Error | undefined = $state(undefined);
 let vulnMap = new SvelteMap<string, VulnState>();
+let sizeMap = new SvelteMap<string, SizeState>();
 
 onMount(async () => {
   try {
@@ -48,20 +56,41 @@ async function scanImagesSequentially(): Promise<void> {
   for (const alt of alternatives) {
     const key = alt.localImage.id;
     vulnMap.set(key, { scanning: true });
+    sizeMap.set(key, { scanning: true });
 
     try {
-      // Scan local image
-      const localVulns = await alternativesAPI.scanLocalImage($state.snapshot(alt.localImage));
+      // Scan local image and fetch alternative data in parallel
+      const [localVulns, altVulns, tags] = await Promise.all([
+        alternativesAPI.scanLocalImage($state.snapshot(alt.localImage)),
+        alternativesAPI.fetchAlternativeVulnerabilities(
+          $state.snapshot(alt.alternative.name),
+          $state.snapshot(alt.alternative.latest_tag),
+        ),
+        alternativesAPI.fetchAlternativeTags($state.snapshot(alt.alternative.name)),
+      ]);
 
-      // Fetch alternative vulnerabilities
-      const altVulns = await alternativesAPI.fetchAlternativeVulnerabilities(
-        $state.snapshot(alt.alternative.name),
-        $state.snapshot(alt.alternative.latest_tag),
-      );
+      console.log('local', alt.localImage);
+      console.log('alternative', alt.alternative);
+
+      // Find the tag matching the latest_tag for the correct architecture
+      const matchingTag = tags.find(t => t.canonical === alt.alternative.latest_tag);
+      if(matchingTag) {
+          console.log('Found matching tag', matchingTag);
+      } else {
+          console.log(`No matching tag found for ${alt.alternative.latest_tag} in tags`, tags);
+      }
+
+      const altSize = matchingTag?.sizes?.[alt.localImage.architecture] ?? 0;
 
       vulnMap.set(key, {
         local: localVulns,
         alternative: altVulns,
+        scanning: false,
+      });
+
+      sizeMap.set(key, {
+        localSize: alt.localImage.size,
+        alternativeSize: altSize,
         scanning: false,
       });
     } catch (err) {
@@ -70,12 +99,12 @@ async function scanImagesSequentially(): Promise<void> {
         scanning: false,
         error: err instanceof Error ? err.message : String(err),
       });
+      sizeMap.set(key, {
+        scanning: false,
+        error: err instanceof Error ? err.message : String(err),
+      });
     }
   }
-}
-
-function navigateToHome(): Promise<void> {
-  return goto(resolve('/'));
 }
 
 const columns = [
@@ -84,15 +113,21 @@ const columns = [
     renderer: LocalImageCell,
     overflow: true,
   }),
-  new TableColumn<AlternativeRow>('Hummingbird Alternative', {
+  new TableColumn<AlternativeRow>('Alternative', {
     width: '1.5fr',
     renderer: AlternativeImageCell,
     overflow: true,
   }),
-  new TableColumn<AlternativeRow, VulnState | undefined>('CVE Reduction', {
-    width: '2fr',
+  new TableColumn<AlternativeRow, VulnState | undefined>('CVEs', {
+    width: '1fr',
     renderer: CVEReductionCell,
     renderMapping: (row: AlternativeRow): VulnState | undefined => row.vulnState,
+    overflow: true,
+  }),
+  new TableColumn<AlternativeRow, SizeState | undefined>('Size Reduction', {
+    width: '1fr',
+    renderer: SizeReductionCell,
+    renderMapping: (row: AlternativeRow): SizeState | undefined => row.sizeState,
     overflow: true,
   }),
   new TableColumn<AlternativeRow>('', {
@@ -108,6 +143,7 @@ let data: AlternativeRow[] = $derived(
   alternatives.map(alt => ({
     ...alt,
     vulnState: vulnMap.get(alt.localImage.id),
+    sizeState: sizeMap.get(alt.localImage.id),
     name: alt.localImage.name,
   })),
 );
@@ -116,9 +152,6 @@ let empty = $derived(alternatives.length === 0);
 </script>
 
 <NavPage title="Hardened Image Alternatives" searchEnabled={false}>
-  {#snippet additionalActions()}
-    <Button title="Back to Catalog" onclick={navigateToHome}>Back to Catalog</Button>
-  {/snippet}
   {#snippet content()}
       {#if loading}
         <div class="flex justify-center items-center h-64">
@@ -137,9 +170,6 @@ let empty = $derived(alternatives.length === 0);
           title="No alternatives found"
           aria-label="No alternatives found"
           message="No local images with Hummingbird alternatives were found. Pull some common images like nginx, postgres, or python to see alternatives.">
-          <div class="flex gap-2 justify-center">
-            <Button title="Back to Catalog" type="link" onclick={navigateToHome}>Back to Catalog</Button>
-          </div>
         </EmptyScreen>
       {:else}
         <Table kind="alternatives" data={data} columns={columns} row={row} />

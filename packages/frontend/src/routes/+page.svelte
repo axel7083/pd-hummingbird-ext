@@ -59,17 +59,9 @@ function onContainerProviderConnectionChange(value: ProviderContainerConnectionD
 function refresh(): Promise<void> {
   return invalidateAll();
 }
-
-function navigateToGenerate(): Promise<void> {
-  return goto(resolve('/alternatives'));
-}
 </script>
 
 <NavPage title="Hummingbird Catalog" searchEnabled={true} bind:searchTerm={searchTerm}>
-  {#snippet additionalActions()}
-    <Button title="Scan local images" onclick={navigateToGenerate}
-    >Scan Local Images</Button>
-  {/snippet}
   {#snippet bottomAdditionalActions()}
     {#if $providerConnectionsInfo.length > 1}
       <div class="w-full flex justify-end">
