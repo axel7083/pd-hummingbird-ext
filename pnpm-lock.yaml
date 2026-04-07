@@ -115,6 +115,9 @@ importers:
       '@podman-desktop/grype-extension-api':
         specifier: next
         version: 0.2.0-next.202604070628-8ea0e85
+      '@podman-desktop/podman-extension-api':
+        specifier: ^1.26.1
+        version: 1.26.1
       '@types/node':
         specifier: ^24
         version: 24.12.2
@@ -818,6 +821,9 @@ packages:
 
   '@podman-desktop/grype-extension-api@0.2.0-next.202604070628-8ea0e85':
     resolution: {integrity: sha512-qL0l9OQkZa1QdNZLkjSEmvioldwbOP3lPCG4BsltgFddiz5tEzeS9tyb2fPT6AbdNLS6OJp4nEuEHCjLVg1zDw==}
+
+  '@podman-desktop/podman-extension-api@1.26.1':
+    resolution: {integrity: sha512-OUj+f3WVHdU602hn2OKXEbSTSM4VLR4rL1a4qBAWf2H8I/KrKJmPPDopKd0/pUeeSyUfElyfwAERrHHYDVjU7w==}
 
   '@podman-desktop/ui-svelte@1.26.1':
     resolution: {integrity: sha512-8oYg+5mc0ReMeeCSfXX2TmqOqln+A69UoRPw3XQ8qmtWOkV+cnATRfNGztE9Dqs9OS9srngoCZ210t6U5IhdjA==}
@@ -4569,6 +4575,10 @@ snapshots:
   '@podman-desktop/grype-extension-api@0.2.0-next.202604070628-8ea0e85':
     dependencies:
       zod: 4.3.6
+
+  '@podman-desktop/podman-extension-api@1.26.1':
+    dependencies:
+      '@podman-desktop/api': 1.26.1
 
   '@podman-desktop/ui-svelte@1.26.1(svelte-fa@4.0.4(svelte@5.55.1))(svelte@5.55.1)':
     dependencies:

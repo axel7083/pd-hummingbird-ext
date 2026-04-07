@@ -56,6 +56,7 @@ import { ProviderApiImpl } from '../apis/provider-api-impl';
 import { CommandService } from './command-service';
 import { GrypeService } from './scanners/grype-service';
 import { AlternativesApiImpl } from '../apis/alternatives-api-impl';
+import { PodmanService } from './podman-service';
 
 interface Dependencies {
   extensionContext: ExtensionContext;
@@ -147,6 +148,14 @@ export class MainService implements Disposable, AsyncInit {
     });
     await images.init();
     this.#disposables.push(images);
+
+    const podman = new PodmanService({
+      containers: this.dependencies.containers,
+      providers: providers,
+      processApi: this.dependencies.processApi,
+      extensions: this.dependencies.extensions,
+    });
+    this.#disposables.push(podman);
 
     // commands
     const commands = new CommandService({

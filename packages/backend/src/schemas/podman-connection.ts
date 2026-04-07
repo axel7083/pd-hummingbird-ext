@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2026 Red Hat, Inc.
+ * Copyright (C) 2025 Red Hat, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,17 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ***********************************************************************/
-import type { PageLoad } from './$types';
 
-interface Data {
-  containers: Promise<any>;
+/**
+ * This interface represent the item in the array we get when
+ * running `podman system connection ls --format=json`
+ * TODO: zodify this
+ */
+export interface PodmanConnection {
+  Name: string;
+  IsMachine?: boolean;
+  URI: string;
+  Identity?: string;
+  Default: boolean;
+  ReadWrite: boolean;
 }
-
-export const load: PageLoad = async ({ url, depends }): Promise<Data> => {
-  return {
-
-  };
-};
