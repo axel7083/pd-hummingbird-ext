@@ -28,7 +28,7 @@
 
     return {
       count: imageTotal - altTotal,
-      percent: imageTotal > 0 ? (100 - (altTotal / imageTotal) * 100) : 0
+      percent: imageTotal > 0 ? (100 - (altTotal / imageTotal) * 100) : 0,
     };
   });
 

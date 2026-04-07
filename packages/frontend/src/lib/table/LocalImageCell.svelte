@@ -6,13 +6,16 @@ interface Props {
 }
 
 let { object }: Props = $props();
+
+let shortName = $derived(object.localImage.name.split('/').pop() ?? object.localImage.name);
+let fullPath = $derived(`${object.localImage.name}:${object.localImage.tag}`);
 </script>
 
 <div class="flex flex-col">
-  <div class="text-sm font-medium text-[var(--pd-content-header)]">
-    {object.localImage.name.split('/').pop()}
+  <div class="text-base font-medium text-[var(--pd-content-header)]">
+    {shortName}
   </div>
-  <div class="text-xs text-[var(--pd-content-text)] opacity-50">
-    {object.localImage.name}:{object.localImage.tag}
+  <div class="text-sm text-[var(--pd-content-text)] opacity-50">
+    {fullPath}
   </div>
 </div>

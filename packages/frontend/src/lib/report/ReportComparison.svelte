@@ -17,30 +17,30 @@
     altCveCount, 
     imageCveCount, 
     altSize, 
-    imageSize 
+    imageSize, 
   }: Props = $props();
 
   const benefits = [
     {
       title: `${cveReductionPercent?.toFixed(0) ?? 0}% Fewer Vulnerabilities`,
       description: `Only ${altCveCount ?? 0} CVE vs ${imageCveCount ?? 0}`,
-      show: cveReductionPercent !== undefined
+      show: cveReductionPercent !== undefined,
     },
     {
       title: `${sizeReductionPercent?.toFixed(0) ?? 0}% Smaller Image Size`,
       description: `${filesize(altSize ?? 0)} vs ${filesize(imageSize ?? 0)}`,
-      show: sizeReductionPercent !== undefined
+      show: sizeReductionPercent !== undefined,
     },
     {
       title: 'Enterprise-Grade Security',
       description: 'FIPS-compliant with continuous scanning',
-      show: true
+      show: true,
     },
     {
       title: 'Minimal Attack Surface',
       description: 'Distroless with essential components only',
-      show: true
-    }
+      show: true,
+    },
   ];
 </script>
 

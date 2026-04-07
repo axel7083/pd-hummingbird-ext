@@ -2,7 +2,7 @@
     import type {OptimisationReport} from '@podman-desktop/extension-hummingbird-core-api';
     import {SvelteSet} from 'svelte/reactivity';
     import RawReport from '$lib/report/RawReport.svelte';
-    import { EmptyScreen } from '@podman-desktop/ui-svelte'
+    import { EmptyScreen } from '@podman-desktop/ui-svelte';
     import { faShieldHalved } from '@fortawesome/free-solid-svg-icons/faShieldHalved';
 
     interface Props {

@@ -31,7 +31,7 @@
     date,
     dateLabel = 'Last Updated',
     signed,
-    dateDisplay
+    dateDisplay,
   }: Props = $props();
 </script>
 

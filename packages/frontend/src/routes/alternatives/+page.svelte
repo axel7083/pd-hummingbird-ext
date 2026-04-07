@@ -8,8 +8,8 @@ import { goto } from '$app/navigation';
 import { resolve } from '$app/paths';
 import AlternativeImageCell from '$lib/table/AlternativeImageCell.svelte';
 import LocalImageCell from '$lib/table/LocalImageCell.svelte';
-import LocalVulnerabilitiesCell from '$lib/table/LocalVulnerabilitiesCell.svelte';
-import AlternativeVulnerabilitiesCell from '$lib/table/AlternativeVulnerabilitiesCell.svelte';
+import CVEReductionCell from '$lib/table/CVEReductionCell.svelte';
+import ViewDetailsCell from '$lib/table/ViewDetailsCell.svelte';
 import { SvelteMap } from 'svelte/reactivity';
 
 interface VulnState {
@@ -28,7 +28,7 @@ interface AlternativeRow extends LocalImageAlternative {
 let alternatives: LocalImageAlternative[] = $state([]);
 let loading = $state(true);
 let error: Error | undefined = $state(undefined);
-let vulnMap = new SvelteMap();
+let vulnMap = new SvelteMap<string, VulnState>();
 
 onMount(async () => {
   try {
@@ -80,26 +80,25 @@ function navigateToHome(): Promise<void> {
 
 const columns = [
   new TableColumn<AlternativeRow>('Original Image', {
-    width: '2fr',
+    width: '1.5fr',
     renderer: LocalImageCell,
     overflow: true,
   }),
   new TableColumn<AlternativeRow>('Hummingbird Alternative', {
-    width: '2fr',
+    width: '1.5fr',
     renderer: AlternativeImageCell,
     overflow: true,
   }),
-  new TableColumn<AlternativeRow, VulnState | undefined>('Original CVEs', {
-    width: '1fr',
-    renderer: LocalVulnerabilitiesCell,
+  new TableColumn<AlternativeRow, VulnState | undefined>('CVE Reduction', {
+    width: '2fr',
+    renderer: CVEReductionCell,
     renderMapping: (row: AlternativeRow): VulnState | undefined => row.vulnState,
     overflow: true,
   }),
-  new TableColumn<AlternativeRow, VulnState | undefined>('Alternative CVEs', {
-    width: '1fr',
-    renderer: AlternativeVulnerabilitiesCell,
-    renderMapping: (row: AlternativeRow): VulnState | undefined => row.vulnState,
-    overflow: true,
+  new TableColumn<AlternativeRow>('', {
+    width: '150px',
+    renderer: ViewDetailsCell,
+    align: 'right',
   }),
 ];
 
@@ -121,12 +120,6 @@ let empty = $derived(alternatives.length === 0);
     <Button title="Back to Catalog" onclick={navigateToHome}>Back to Catalog</Button>
   {/snippet}
   {#snippet content()}
-    <div class="flex flex-col grow px-5 py-3">
-      <div class="mb-4 text-[var(--pd-content-text)] opacity-80">
-        Discover secure, zero-CVE Hummingbird container images as drop-in replacements for your current images. These
-        hardened alternatives provide enhanced security with minimal attack surfaces.
-      </div>
-
       {#if loading}
         <div class="flex justify-center items-center h-64">
           <Spinner />
@@ -151,6 +144,5 @@ let empty = $derived(alternatives.length === 0);
       {:else}
         <Table kind="alternatives" data={data} columns={columns} row={row} />
       {/if}
-    </div>
   {/snippet}
 </NavPage>
