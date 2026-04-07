@@ -106,7 +106,11 @@ export class HummingbirdService implements Disposable {
     };
   }
 
-  protected async findVulnerabilities(image: ImageInspectInfo): Promise<VulnerabilitiesSummary | undefined> {
+  public getClient(): Api<unknown> {
+    return this.#client;
+  }
+
+  public async findVulnerabilities(image: ImageInspectInfo): Promise<VulnerabilitiesSummary | undefined> {
     if (!this.dependencies.grype.api) return undefined;
 
     const doc = await this.dependencies.grype.api.vulnerability.analyse(

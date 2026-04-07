@@ -15,28 +15,24 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ***********************************************************************/
+import type { LocalImage, LocalImageAlternative } from '../models/local-image-alternative';
+import type { VulnerabilitiesSummary } from '../generated/hummingbird-project';
 
-// constants
-export * from './messages';
+export abstract class AlternativesApi {
+  static readonly CHANNEL: string = 'alternatives-api';
 
-// apis
-export * from './apis/routing-api';
-export * from './apis/hummingbird-api';
-export * from './apis/dialog-api';
-export * from './apis/image-api';
-export * from './apis/provider-api';
-export * from './apis/alternatives-api';
+  /**
+   * Get all local images that have Hummingbird alternatives
+   */
+  abstract getLocalImagesWithAlternatives(): Promise<LocalImageAlternative[]>;
 
-// proxy utils
-export * from './messages/message-proxy';
+  /**
+   * Scan a specific local image for vulnerabilities
+   */
+  abstract scanLocalImage(image: LocalImage): Promise<VulnerabilitiesSummary>;
 
-// models
-export * from './models/input-box-options';
-export * from './models/provider-container-connection-identifier-info';
-export * from './models/provider-container-connection-detailed-info';
-export * from './models/simple-image-info';
-export * from './models/optimisation-report';
-export * from './models/local-image-alternative';
-
-// hummingbird project types
-export * from './generated/hummingbird-project';
+  /**
+   * Fetch alternative image vulnerabilities from Hummingbird API
+   */
+  abstract fetchAlternativeVulnerabilities(imageName: string, tag: string): Promise<VulnerabilitiesSummary>;
+}

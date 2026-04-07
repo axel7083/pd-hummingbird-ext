@@ -18,5 +18,11 @@
 import { getChannel } from './utils';
 import { ImageApi } from '../apis/image-api';
 import { HummingbirdApi } from '../apis/hummingbird-api';
+import { AlternativesApi } from '../apis/alternatives-api';
 
-export const noTimeoutChannels: string[] = [getChannel(ImageApi, 'pull'), getChannel(HummingbirdApi, 'getOptimisationReport')];
+export const noTimeoutChannels: string[] = [
+  getChannel(ImageApi, 'pull'),
+  getChannel(HummingbirdApi, 'getOptimisationReport'),
+  getChannel(AlternativesApi, 'fetchAlternativeVulnerabilities'),
+  getChannel(AlternativesApi, 'scanLocalImage'),
+];

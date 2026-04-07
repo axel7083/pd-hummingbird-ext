@@ -38,6 +38,7 @@ import {
   DialogApi,
   ImageApi,
   ProviderApi,
+  AlternativesApi,
 } from '@podman-desktop/extension-hummingbird-core-api';
 
 import type { AsyncInit } from '../utils/async-init';
@@ -54,6 +55,7 @@ import { ProviderService } from './provider-service';
 import { ProviderApiImpl } from '../apis/provider-api-impl';
 import { CommandService } from './command-service';
 import { GrypeService } from './scanners/grype-service';
+import { AlternativesApiImpl } from '../apis/alternatives-api-impl';
 
 interface Dependencies {
   extensionContext: ExtensionContext;
@@ -188,5 +190,12 @@ export class MainService implements Disposable, AsyncInit {
       providers,
     });
     rpcExtension.registerInstance<ImageApi>(ImageApi, imageApiImpl);
+
+    // alternatives api
+    const alternativesApiImpl = new AlternativesApiImpl({
+      hummingbird,
+      containersAPI: this.dependencies.containers,
+    });
+    rpcExtension.registerInstance<AlternativesApi>(AlternativesApi, alternativesApiImpl);
   }
 }

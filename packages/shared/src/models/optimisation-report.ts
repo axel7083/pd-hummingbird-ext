@@ -32,6 +32,8 @@ export interface AlternativeReport {
   vulnerabilities: VulnerabilitiesResponse;
 }
 
+export type Alternative = AlternativeReport;
+
 export interface SBOMReport {
   count: number;
   packages: string[];
