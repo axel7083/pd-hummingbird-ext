@@ -15,7 +15,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ***********************************************************************/
-import type { ExtensionContext } from '@podman-desktop/api';
+import { ExtensionContext, navigateToContribution, Uri } from '@podman-desktop/api';
 import {
   containerEngine,
   extensions,
@@ -34,6 +34,12 @@ let main: MainService | undefined;
 
 // Initialize the activation of the extension.
 export async function activate(extensionContext: ExtensionContext): Promise<void> {
+  navigationApi
+    .navigateToExtensionsCatalog({
+      searchTerm: 'category:Vulnerability Scanner',
+    })
+    .catch(console.error);
+
   main = new MainService({
     window: window,
     extensionContext,

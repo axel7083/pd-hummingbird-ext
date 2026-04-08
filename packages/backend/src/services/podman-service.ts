@@ -2,8 +2,7 @@ import type {
   extensions as Extensions,
   process as ProcessApi,
   ProviderContainerConnection,
-  type Disposable,
-  ImageInspectInfo,
+  Disposable,
   containerEngine as containersApi,
   ContainerInspectInfo,
 } from '@podman-desktop/api';
@@ -100,13 +99,20 @@ export class PodmanService implements Disposable {
   }> {
     const connection = await this.getRunningProviderContainerConnectionByEngineId(container.engineId);
 
-    const result = await this.podman.exec(['container','clone', container.Id, `${container.Name}-clone`, alternative], {
-      connection: connection,
-    });
-
-    return {
-      engineId: container.engineId,
-      Id: result.stdout.trim(),
-    };
+    try {
+      const result = await this.podman.exec(
+        ['container', 'clone', container.Id, `${container.Name}-clone`, alternative, '--run'],
+        {
+          connection: connection,
+        },
+      );
+      return {
+        engineId: container.engineId,
+        Id: result.stdout.trim(),
+      };
+    } catch (err: unknown) {
+      console.error('Cannot clone container', err);
+      throw err;
+    }
   }
 }

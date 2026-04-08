@@ -12,7 +12,6 @@ import { Messages, type ProviderContainerConnectionDetailedInfo } from '@podman-
 import { page } from '$app/state';
 import { onMount } from 'svelte';
 import { rpcBrowser } from '/@/api/client';
-import {resolve} from '$app/paths';
 
 let { data }: PageProps = $props();
 

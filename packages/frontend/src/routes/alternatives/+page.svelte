@@ -1,5 +1,5 @@
 <script lang="ts">
-import { NavPage, EmptyScreen, Button, Spinner, Table, TableColumn, TableRow } from '@podman-desktop/ui-svelte';
+import { NavPage, EmptyScreen, Spinner, Table, TableColumn, TableRow } from '@podman-desktop/ui-svelte';
 import { alternativesAPI } from '/@/api/client';
 import type { LocalImageAlternative, VulnerabilitiesSummary } from '@podman-desktop/extension-hummingbird-core-api';
 import { onMount } from 'svelte';

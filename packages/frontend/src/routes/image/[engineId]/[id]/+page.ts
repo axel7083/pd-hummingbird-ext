@@ -15,13 +15,15 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ***********************************************************************/
-import type { OptimisationReport } from '@podman-desktop/extension-hummingbird-core-api';
+import type { OptimisationReport, ContainerInfo } from '@podman-desktop/extension-hummingbird-core-api';
 import type { PageLoad } from './$types';
-import { hummingbirdAPI } from '/@/api/client';
+import { hummingbirdAPI, containerAPI } from '/@/api/client';
 
 interface Data {
   engineId: string;
-  report: Promise<OptimisationReport>
+  imageId: string;
+  report: Promise<OptimisationReport>;
+  containers: Promise<ContainerInfo[]>;
 }
 
 export const load: PageLoad = async ({ params }): Promise<Data> => {
@@ -30,6 +32,8 @@ export const load: PageLoad = async ({ params }): Promise<Data> => {
 
   return {
     engineId,
+    imageId,
     report: hummingbirdAPI.getOptimisationReport(engineId, imageId),
+    containers: containerAPI.listContainersByImage(engineId, imageId),
   };
 };

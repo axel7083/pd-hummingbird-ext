@@ -29,6 +29,10 @@ export class GrypeService implements AsyncInit, Disposable {
   constructor(protected readonly dependencies: Dependencies) {}
 
   get api(): GrypeExtensionApi | undefined {
+    if(this.#api) {
+      return this.#api;
+    }
+    this.#api = this.getGrypeAPI();
     return this.#api;
   }
 
@@ -36,12 +40,14 @@ export class GrypeService implements AsyncInit, Disposable {
     this.#api = undefined;
   }
 
-  async init(): Promise<void> {
+  protected getGrypeAPI(): GrypeExtensionApi {
     const grype = this.dependencies.extensionsAPI.getExtension<GrypeExtensionApi>('podman-desktop.grype');
     if (grype) {
-      this.#api = grype.exports;
+      return grype.exports;
     } else {
-      console.warn('cannot find the grype extension');
+      throw new Error('cannot find the grype extension');
     }
   }
+
+  async init(): Promise<void> {}
 }

@@ -39,6 +39,7 @@ import {
   ImageApi,
   ProviderApi,
   AlternativesApi,
+  ContainerApi,
 } from '@podman-desktop/extension-hummingbird-core-api';
 
 import type { AsyncInit } from '../utils/async-init';
@@ -57,6 +58,7 @@ import { CommandService } from './command-service';
 import { GrypeService } from './scanners/grype-service';
 import { AlternativesApiImpl } from '../apis/alternatives-api-impl';
 import { PodmanService } from './podman-service';
+import { ContainerApiImpl } from '../apis/container-api-impl';
 
 interface Dependencies {
   extensionContext: ExtensionContext;
@@ -206,5 +208,12 @@ export class MainService implements Disposable, AsyncInit {
       containersAPI: this.dependencies.containers,
     });
     rpcExtension.registerInstance<AlternativesApi>(AlternativesApi, alternativesApiImpl);
+
+    // container api
+    const containerApiImpl = new ContainerApiImpl({
+      containersAPI: this.dependencies.containers,
+      podman,
+    });
+    rpcExtension.registerInstance<ContainerApi>(ContainerApi, containerApiImpl);
   }
 }
