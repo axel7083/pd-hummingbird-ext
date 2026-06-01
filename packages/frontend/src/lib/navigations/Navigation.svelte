@@ -4,13 +4,15 @@ import { SettingsNavItem } from '@podman-desktop/ui-svelte';
 import { resolve } from '$app/paths';
 import { page } from '$app/state';
 import ImageIcon from '$lib/icons/ImageIcon.svelte';
+import HummingbirdIcon from '../../public/icon.png?inline';
 </script>
 
 <nav
   class="z-1 w-leftsidebar min-w-leftsidebar flex-col justify-between flex transition-all duration-500 ease-in-out bg-[var(--pd-secondary-nav-bg)] border-[var(--pd-global-nav-bg-border)] border-r-[1px]"
   aria-label="Navigation">
   <div class="flex items-center">
-    <a href={resolve('/')} title="Navigate to dashboard" class="pt-4 px-3 mb-5 flex items-center gap-3">
+    <a href={resolve('/')} title="Navigate to dashboard" class="pt-4 px-3 mb-5 flex items-center gap-1">
+      <img src={HummingbirdIcon} alt="Hummingbird" class="w-6 h-6" />
       <p
         class="text-xl font-semibold text-[color:var(--pd-secondary-nav-header-text)] border-l-[4px] border-transparent">
         Hummingbird
