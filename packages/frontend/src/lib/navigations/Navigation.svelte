@@ -1,10 +1,9 @@
 <script lang="ts">
 import { faHouse } from '@fortawesome/free-solid-svg-icons';
 import { SettingsNavItem } from '@podman-desktop/ui-svelte';
-import { resolve } from '$app/paths';
+import { resolve, asset } from '$app/paths';
 import { page } from '$app/state';
 import ImageIcon from '$lib/icons/ImageIcon.svelte';
-import HummingbirdIcon from '../../public/icon.png?inline';
 </script>
 
 <nav
@@ -12,7 +11,7 @@ import HummingbirdIcon from '../../public/icon.png?inline';
   aria-label="Navigation">
   <div class="flex items-center">
     <a href={resolve('/')} title="Navigate to dashboard" class="pt-4 px-3 mb-5 flex items-center gap-1">
-      <img src={HummingbirdIcon} alt="Hummingbird" class="w-6 h-6" />
+      <img src={asset('icon.png')} alt="Hummingbird" class="w-6 h-6" />
       <p
         class="text-xl font-semibold text-[color:var(--pd-secondary-nav-header-text)] border-l-[4px] border-transparent">
         Hummingbird
