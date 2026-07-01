@@ -59,16 +59,20 @@ function getProviderStatusColor(item: ProviderContainerConnectionDetailedInfo): 
     label: containerProviderConnection.name,
   }))}>
   <div slot="item" let:item>
-    <div class="flex items-center">
-      <div class="flex w-2 h-2 me-2 rounded-full {getProviderStatusColor(item)}"></div>
-      <div class="grow">
-        <span>{item.name}</span>
+    <div class="flex items-center w-full">
+      <div class="w-2 h-2 min-w-2 me-2 rounded-full {getProviderStatusColor(item)}"></div>
+
+      <div class="flex-1 min-w-0">
+        <span class="block truncate">
+          {item.name}
+        </span>
       </div>
-      <div>
-        {#if item.vmType}
+
+      {#if item.vmType}
+        <div class="flex-shrink-0 ms-2">
           ({item.vmType})
-        {/if}
-      </div>
+        </div>
+      {/if}
     </div>
   </div>
 </Select>
