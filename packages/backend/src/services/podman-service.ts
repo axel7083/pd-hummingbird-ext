@@ -1,14 +1,11 @@
 import {
   containerEngine as containerEngineAPI,
   Disposable,
-  extensions as extensionsAPI,
   ProgressLocation,
   ProviderContainerConnection,
   TelemetryLogger,
   window as windowAPI,
 } from '@podman-desktop/api';
-import type { PodmanExtensionApi } from '@podman-desktop/podman-extension-api';
-import { PODMAN_EXTENSION_ID } from '/@/utils/constants';
 import { ProviderService } from '/@/services/provider-service';
 import { inject, injectable } from 'inversify';
 import { TelemetryLoggerSymbol } from '/@/inject/symbol';
@@ -24,31 +21,7 @@ export class PodmanService implements Disposable {
     protected readonly telemetryLogger: TelemetryLogger,
   ) {}
 
-  // smart podman extension api getter with some cache
-  #podman: PodmanExtensionApi | undefined;
-  protected get podman(): PodmanExtensionApi {
-    if (!this.#podman) {
-      this.#podman = this.getPodmanExtension();
-    }
-    return this.#podman;
-  }
-
-  dispose(): void {
-    this.#podman = undefined;
-  }
-
-  protected getPodmanExtension(): PodmanExtensionApi {
-    const podman = extensionsAPI.getExtension(PODMAN_EXTENSION_ID);
-    if (!podman) throw new Error('podman extension not found');
-    if (!podman.exports)
-      throw new Error(`podman extension is not exporting any API. Got version ${podman.packageJSON['version']}`);
-
-    if (!('exec' in podman.exports) || typeof podman.exports.exec !== 'function') {
-      throw new Error('invalid podman extension exports');
-    }
-
-    return podman.exports;
-  }
+  dispose(): void {}
 
   /**
    * This method return the ContainerProviderConnection corresponding to an engineId
