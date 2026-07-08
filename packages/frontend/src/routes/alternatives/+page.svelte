@@ -21,8 +21,12 @@ onMount(() => {
 
 let columns = $derived([
   {
-    name: 'Original Image',
-    width: '1.5fr',
+    name: 'Status',
+    width: '70px',
+  },
+  {
+    name: '',
+    width: '2fr',
   },
   ...(data.isGrypeInstalled
     ? [
@@ -36,6 +40,10 @@ let columns = $derived([
         },
       ]
     : []),
+  {
+    name: 'Actions',
+    width: '50px',
+  },
 ]);
 </script>
 

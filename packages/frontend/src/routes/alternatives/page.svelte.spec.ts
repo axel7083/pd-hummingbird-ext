@@ -18,7 +18,7 @@
 
 import '@testing-library/jest-dom/vitest';
 
-import { render, within } from '@testing-library/svelte';
+import { cleanup, render, within } from '@testing-library/svelte';
 
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import type { LocalImageAlternative } from '@podman-desktop/extension-hummingbird-core-api';
@@ -87,6 +87,41 @@ describe('loading', () => {
     const skeletons = getByRole('table', { name: 'loading' });
     expect(skeletons).toBeInTheDocument();
   });
+
+  test.each([true, false])(
+    'skeleton table columns should match alternatives table columns (isGrypeInstalled: %s)',
+    async (isGrypeInstalled) => {
+      const { getByRole: getSkeletonRole } = render(Page, {
+        data: {
+          alternatives: new Promise<Array<LocalImageAlternative>>(vi.fn()),
+          isGrypeInstalled,
+        },
+        params: {},
+      });
+
+      const skeletonTable = getSkeletonRole('table', { name: 'loading' });
+      const skeletonHeaders = within(skeletonTable)
+        .getAllByRole('columnheader')
+        .map(el => el.textContent?.trim() ?? '');
+
+      cleanup();
+
+      const { getByRole } = render(Page, {
+        data: {
+          alternatives: Promise.resolve(ALTERNATIVES),
+          isGrypeInstalled,
+        },
+        params: {},
+      });
+
+      const alternativesTable = await vi.waitFor(() => getByRole('table', { name: 'alternatives' }));
+      const actualHeaders = within(alternativesTable)
+        .getAllByRole('columnheader')
+        .map(el => el.textContent?.trim() ?? '');
+
+      expect(skeletonHeaders).toEqual(actualHeaders);
+    },
+  );
 });
 
 describe('data', () => {
