@@ -75,7 +75,7 @@ describe('ClonableContainerTable visibility', () => {
   test('should not display container table when containers array is empty', async () => {
     expect(IMAGE_REPORT_MOCK.containers).toHaveLength(0);
 
-    const { queryByText  } = render(RawReport, {
+    const { queryByText } = render(RawReport, {
       alternative: MOCK_ALTERNATIVE_MOCK,
       image: IMAGE_REPORT_MOCK,
     });
