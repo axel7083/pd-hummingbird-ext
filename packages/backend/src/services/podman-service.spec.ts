@@ -17,19 +17,12 @@
  ***********************************************************************/
 import type {
   ProviderContainerConnection,
-  Extension,
   ContainerEngineInfo,
   TelemetryLogger,
   CancellationToken,
   ImageInspectInfo,
 } from '@podman-desktop/api';
-import {
-  extensions as extensionsAPI,
-  containerEngine as containerEngineAPI,
-  window as windowAPI,
-  ProgressLocation,
-} from '@podman-desktop/api';
-import type { PodmanExtensionApi } from '@podman-desktop/podman-extension-api';
+import { containerEngine as containerEngineAPI, window as windowAPI, ProgressLocation } from '@podman-desktop/api';
 
 import { beforeEach, vi, test, expect, describe } from 'vitest';
 import { PodmanService } from '/@/services/podman-service';
@@ -39,14 +32,6 @@ import { TelemetryEvents } from '/@/utils/telemetry-events';
 const PROVIDER_SERVICE_MOCK: ProviderService = {
   getContainerConnections: vi.fn(),
 } as unknown as ProviderService;
-
-const PODMAN_EXTENSION_API_MOCK: PodmanExtensionApi = {
-  exec: vi.fn(),
-} as unknown as PodmanExtensionApi;
-
-const PODMAN_EXTENSION_MOCK: Extension<PodmanExtensionApi> = {
-  exports: PODMAN_EXTENSION_API_MOCK,
-} as unknown as Extension<PodmanExtensionApi>;
 
 const STARTED_PROVIDER_CONNECTION_MOCK: ProviderContainerConnection = {
   connection: {
@@ -82,7 +67,6 @@ const IMAGE_INSPECT_MOCK = {
 beforeEach(() => {
   vi.resetAllMocks();
 
-  vi.mocked(extensionsAPI.getExtension).mockReturnValue(PODMAN_EXTENSION_MOCK);
   vi.mocked(PROVIDER_SERVICE_MOCK.getContainerConnections).mockReturnValue([STARTED_PROVIDER_CONNECTION_MOCK]);
   vi.mocked(containerEngineAPI.listInfos).mockResolvedValue([ENGINE_INFO_MOCK]);
   vi.mocked(containerEngineAPI.getImageInspect).mockResolvedValue(IMAGE_INSPECT_MOCK);
@@ -94,39 +78,6 @@ beforeEach(() => {
 function getPodmanService(): PodmanService {
   return new PodmanService(PROVIDER_SERVICE_MOCK, TELEMETRY_LOGGER_MOCK);
 }
-
-describe('getPodmanExtension', () => {
-  test('should return podman extension exports when extension exists', () => {
-    const service = getPodmanService();
-    const result = service['getPodmanExtension']();
-
-    expect(result).toStrictEqual(PODMAN_EXTENSION_API_MOCK);
-    expect(extensionsAPI.getExtension).toHaveBeenCalledWith('podman-desktop.podman');
-  });
-
-  test('should throw error when podman extension not found', () => {
-    vi.mocked(extensionsAPI.getExtension).mockReturnValue(undefined);
-
-    const service = getPodmanService();
-
-    expect(() => service['getPodmanExtension']()).toThrow('podman extension not found');
-  });
-});
-
-describe('podman getter', () => {
-  test('should cache podman extension and not call getPodmanExtension multiple times', () => {
-    const service = getPodmanService();
-
-    // Access podman getter multiple times
-    const first = service['podman'];
-    const second = service['podman'];
-
-    expect(first).toStrictEqual(PODMAN_EXTENSION_API_MOCK);
-    expect(second).toStrictEqual(PODMAN_EXTENSION_API_MOCK);
-    // Should only call getExtension once due to caching
-    expect(extensionsAPI.getExtension).toHaveBeenCalledOnce();
-  });
-});
 
 describe('getRunningProviderContainerConnectionByEngineId', () => {
   test('should return provider connection for matching engineId', async () => {
