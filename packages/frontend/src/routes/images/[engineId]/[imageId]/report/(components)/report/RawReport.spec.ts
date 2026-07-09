@@ -17,7 +17,7 @@
  ***********************************************************************/
 
 import '@testing-library/jest-dom/vitest';
-import { render, screen } from '@testing-library/svelte';
+import { render } from '@testing-library/svelte';
 import { describe, expect, test } from 'vitest';
 import RawReport from './RawReport.svelte';
 import type { AlternativeReport, ImageReport, LocalContainer } from '@podman-desktop/extension-hummingbird-core-api';
@@ -45,34 +45,23 @@ const IMAGE_REPORT_MOCK: ImageReport = {
 } as unknown as ImageReport;
 
 test('Expect that RawReport displays both image cards', async () => {
-  render(RawReport, {
+  const { getByText } = render(RawReport, {
     alternative: MOCK_ALTERNATIVE_MOCK,
     image: IMAGE_REPORT_MOCK,
   });
 
-  expect(screen.getByText('alt-image')).toBeInTheDocument();
-  expect(screen.getByText('original-image:latest')).toBeInTheDocument();
-  expect(screen.getByText('Hardened Alternative Found!')).toBeInTheDocument();
+  expect(getByText('alt-image')).toBeInTheDocument();
+  expect(getByText('original-image:latest')).toBeInTheDocument();
+  expect(getByText('Hardened Alternative Found!')).toBeInTheDocument();
 });
 
 describe('ClonableContainerTable visibility', () => {
-  test('should not display container table when containers array is empty', async () => {
-    expect(IMAGE_REPORT_MOCK.containers).toHaveLength(0);
-
-    render(RawReport, {
-      alternative: MOCK_ALTERNATIVE_MOCK,
-      image: IMAGE_REPORT_MOCK,
-    });
-
-    expect(screen.queryByText(/Container.*using original-image:latest image/)).not.toBeInTheDocument();
-  });
-
   test('should display container table and title when containers exist', async () => {
     const containers: LocalContainer[] = [
       { id: 'abcd1234', name: '/my-container', state: 'running' } as unknown as LocalContainer,
     ];
 
-    render(RawReport, {
+    const { getByText } = render(RawReport, {
       alternative: MOCK_ALTERNATIVE_MOCK,
       image: {
         ...IMAGE_REPORT_MOCK,
@@ -80,6 +69,17 @@ describe('ClonableContainerTable visibility', () => {
       },
     });
 
-    expect(screen.getByText(/Container using original-image:latest image/)).toBeInTheDocument();
+    expect(getByText('Container using original-image:latest image')).toBeInTheDocument();
+  });
+
+  test('should not display container table when containers array is empty', async () => {
+    expect(IMAGE_REPORT_MOCK.containers).toHaveLength(0);
+
+    const { queryByText  } = render(RawReport, {
+      alternative: MOCK_ALTERNATIVE_MOCK,
+      image: IMAGE_REPORT_MOCK,
+    });
+
+    expect(queryByText('Container using original-image:latest image')).not.toBeInTheDocument();
   });
 });
