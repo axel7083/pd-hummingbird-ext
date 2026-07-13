@@ -65,7 +65,7 @@ async function navigateToContainer(): Promise<void> {
           {localImage.name}:{localImage.tag}
         </span>
         <span class="text-[var(--pd-content-text)] opacity-30">→</span>
-        <span class="text-base text-purple-400">
+        <span class="text-base text-(--pd-link)">
           quay.io/hummingbird/{alternative.name}:{alternative.latest_tag}
         </span>
       </div>

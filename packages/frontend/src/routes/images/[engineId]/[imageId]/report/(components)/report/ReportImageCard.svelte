@@ -35,16 +35,16 @@ let {
 
 <div
   class="bg-[var(--pd-content-card-bg)] rounded-lg border {isHummingbird
-    ? 'border-purple-500/30'
+    ? 'border-(--pd-button-primary-bg)/30'
     : 'border-[var(--pd-content-card-border)]'} p-5">
   <!-- Header -->
   <div class="flex items-center gap-3 mb-4">
     <RepositoryIcon
-      class={[...(isHummingbird ? ['text-purple-400'] : ['text-[var(--pd-content-text)] grayscale'])]}
+      class={[...(isHummingbird ? ['text-(--pd-link)'] : ['text-[var(--pd-content-text)] grayscale'])]}
       size={24} />
     <div class="min-w-0 flex-1">
       <span class="text-base font-bold text-[var(--pd-content-header)] block truncate" title={title}>{title}</span>
-      <span class="text-xs {isHummingbird ? 'text-purple-400' : 'text-[var(--pd-content-text)] opacity-50'} block"
+      <span class="text-xs {isHummingbird ? 'text-(--pd-link)' : 'text-[var(--pd-content-text)] opacity-50'} block"
         >{subtitle}</span>
     </div>
   </div>
@@ -54,7 +54,7 @@ let {
     <!-- Version Row -->
     <div class="flex justify-between items-center">
       <span class="text-xs text-[var(--pd-content-text)] opacity-50 uppercase tracking-wide">Version</span>
-      <span class="text-sm font-mono {isHummingbird ? 'text-purple-400' : 'text-[var(--pd-content-header)]'}"
+      <span class="text-sm font-mono {isHummingbird ? 'text-(--pd-link)' : 'text-[var(--pd-content-header)]'}"
         >{version}</span>
     </div>
 
@@ -73,7 +73,7 @@ let {
       <span class="text-sm text-[var(--pd-content-header)]">
         {size}
         {#if isHummingbird && sizeReductionPercent !== undefined && sizeReductionPercent > 0}
-          <span class="text-xs text-purple-400 font-medium">(-{sizeReductionPercent.toFixed(0)}%)</span>
+          <span class="text-xs text-(--pd-link) font-medium">(-{sizeReductionPercent.toFixed(0)}%)</span>
         {/if}
       </span>
     </div>

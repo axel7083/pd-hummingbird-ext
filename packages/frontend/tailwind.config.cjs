@@ -31,10 +31,6 @@ module.exports = {
         700: '#aaabac',
         900: '#818181',
       },
-      purple: {
-        400: '#ad8bfa',
-        500: '#8b5cf6',
-      },
       sky: {
         400: '#51a2da',
       },

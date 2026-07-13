@@ -2,7 +2,7 @@
 .page-description {
   margin-bottom: 16px;
   padding: 12px 16px;
-  background: rgba(168, 85, 247, 0.08);
+  background: color-mix(in srgb, var(--pd-button-primary-bg) 8%, transparent);
   border-left: 3px solid var(--pd-link);
   border-radius: 0 4px 4px 0;
 }

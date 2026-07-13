@@ -48,7 +48,7 @@ const benefits = $derived([
 <div class="bg-[var(--pd-content-card-bg)] rounded-lg border border-[var(--pd-content-card-border)] p-5">
   <!-- Header -->
   <div class="flex items-center gap-3 mb-3">
-    <div class="w-9 h-9 bg-purple-500/20 rounded-lg flex items-center justify-center">
+    <div class="w-9 h-9 bg-(--pd-button-primary-bg)/20 rounded-lg flex items-center justify-center">
       <RepositoryIcon size={24} />
     </div>
     <div>
@@ -88,16 +88,16 @@ const benefits = $derived([
         <div>
           <div class="flex justify-between items-center mb-1">
             <span class="text-xs text-[var(--pd-content-text)]">Image Size</span>
-            <span class="text-xs font-semibold text-purple-400">-{sizeReductionPercent.toFixed(0)}%</span>
+            <span class="text-xs font-semibold text-(--pd-link)">-{sizeReductionPercent.toFixed(0)}%</span>
           </div>
           <div class="space-y-1">
             <div
-              class="h-5 rounded bg-purple-500/40 flex items-center px-2"
+              class="h-5 rounded bg-(--pd-button-primary-bg)/40 flex items-center px-2"
               style="width: {Math.max(10, 100 - sizeReductionPercent)}%">
-              <span class="text-[10px] line-clamp-1 font-medium text-purple-200">{filesize(altSize)}</span>
+              <span class="text-[10px] line-clamp-1 font-medium text-(--pd-label-primary-text)">{filesize(altSize)}</span>
             </div>
-            <div class="h-5 rounded bg-purple-500/20 flex items-center px-2" style="width: 100%">
-              <span class="text-[10px] font-medium text-purple-200/60">{filesize(imageSize)}</span>
+            <div class="h-5 rounded bg-(--pd-button-primary-bg)/20 flex items-center px-2" style="width: 100%">
+              <span class="text-[10px] font-medium text-(--pd-label-primary-text) opacity-60">{filesize(imageSize)}</span>
             </div>
           </div>
         </div>
@@ -108,16 +108,16 @@ const benefits = $derived([
         <div>
           <div class="flex justify-between items-center mb-1">
             <span class="text-xs text-[var(--pd-content-text)]">CVE Count</span>
-            <span class="text-xs font-semibold text-purple-400">-{cveReductionPercent.toFixed(0)}%</span>
+            <span class="text-xs font-semibold text-(--pd-link)">-{cveReductionPercent.toFixed(0)}%</span>
           </div>
           <div class="space-y-1">
             <div
-              class="h-5 rounded bg-purple-500/40 flex items-center px-2"
+              class="h-5 rounded bg-(--pd-button-primary-bg)/40 flex items-center px-2"
               style="width: {Math.max(10, 100 - cveReductionPercent)}%">
-              <span class="text-[10px] font-medium text-purple-200">{altCveCount}</span>
+              <span class="text-[10px] font-medium text-(--pd-label-primary-text)">{altCveCount}</span>
             </div>
-            <div class="h-5 rounded bg-purple-500/20 flex items-center px-2" style="width: 100%">
-              <span class="text-[10px] font-medium text-purple-200/60">{imageCveCount}</span>
+            <div class="h-5 rounded bg-(--pd-button-primary-bg)/20 flex items-center px-2" style="width: 100%">
+              <span class="text-[10px] font-medium text-(--pd-label-primary-text) opacity-60">{imageCveCount}</span>
             </div>
           </div>
         </div>

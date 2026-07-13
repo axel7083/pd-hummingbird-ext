@@ -24,7 +24,7 @@ let { object }: Props = $props();
       {object.localImage.name}:{object.localImage.tag}
     </span>
     <span class="text-[var(--pd-content-text)] opacity-30">→</span>
-    <span class="text-base text-purple-400 overflow-hidden text-ellipsis">
+    <span class="text-base text-(--pd-link) overflow-hidden text-ellipsis">
       quay.io/hummingbird/{object.alternative.name}
     </span>
   </a>

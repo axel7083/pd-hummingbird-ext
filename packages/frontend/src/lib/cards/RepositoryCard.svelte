@@ -57,7 +57,7 @@ function openExternal(): Promise<boolean> {
           <div class="text-(--pd-content-header)">
             {image.name}
           </div>
-          <div class="text-(--pd-content-text) text-purple-400">
+          <div class="text-(--pd-link)">
             quay.io/hummingbird/{image.name}
           </div>
         </div>
