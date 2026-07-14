@@ -42,9 +42,8 @@ describe('RepositoryIcon', () => {
 
     const paths = container.querySelectorAll('path');
     expect(paths.length).toBe(2);
-    // Dark theme color is #6A4AB2
-    expect(paths[0]).toHaveAttribute('fill', '#6A4AB2');
-    expect(paths[1]).toHaveAttribute('fill', '#B393FA');
+    expect(paths[0]).toHaveAttribute('fill', 'var(--pd-label-primary-bg)');
+    expect(paths[1]).toHaveAttribute('fill', 'var(--pd-link)');
   });
 
   test('should render with light theme color', async () => {
@@ -56,8 +55,7 @@ describe('RepositoryIcon', () => {
 
     const paths = container.querySelectorAll('path');
     expect(paths.length).toBe(2);
-    // Light theme color is #7E44FF
-    expect(paths[0]).toHaveAttribute('fill', '#7E44FF');
-    expect(paths[1]).toHaveAttribute('fill', '#7E44FF');
+    expect(paths[0]).toHaveAttribute('fill', 'var(--pd-label-primary-bg)');
+    expect(paths[1]).toHaveAttribute('fill', 'var(--pd-link)');
   });
 });
