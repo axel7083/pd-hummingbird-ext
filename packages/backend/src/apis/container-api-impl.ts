@@ -38,6 +38,7 @@ export class ContainerApiImpl extends ContainerApi {
       id: container.Id,
       name: container.Name,
       imageID: container.Image,
+      state: container.State.Running ? 'running' : 'stopped',
     };
   }
 

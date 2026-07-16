@@ -64,6 +64,7 @@ test('should display clone icon button for container row', () => {
     id: 'container123',
     engineId: 'podman',
     imageID: 'localhost/foo:bar',
+    state: 'running',
   };
 
   const { getByTitle } = render(ActionColumn, { object: containerRow });
@@ -134,6 +135,7 @@ test('should navigate to clone container when clone button is clicked', async ()
     id: 'container123',
     engineId: 'podman',
     imageID: 'localhost/foo:bar',
+    state: 'running',
   };
 
   const { getByTitle } = render(ActionColumn, { object: containerRow });
