@@ -22,6 +22,8 @@ import { ContainerApi } from '../apis/container-api';
 
 export const noTimeoutChannels: string[] = [
   getChannel(ImageApi, 'pull'),
+  getChannel(ImageApi, 'all'),
   getChannel(AlternativesApi, 'getAlternativeReport'),
+  getChannel(AlternativesApi, 'getAlternatives'),
   getChannel(ContainerApi, 'clone'),
 ];
