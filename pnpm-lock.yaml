@@ -127,8 +127,8 @@ importers:
         version: 4.4.3
     devDependencies:
       '@podman-desktop/api':
-        specifier: ^1.28.3
-        version: 1.28.3
+        specifier: ^1.29.0-next.202607210731-f5075de
+        version: 1.29.0-next.202607210731-f5075de
       '@podman-desktop/extension-hummingbird-core-api':
         specifier: workspace:^
         version: link:../shared
@@ -138,6 +138,9 @@ importers:
       '@types/node':
         specifier: ^24
         version: 24.13.3
+      semver:
+        specifier: ^7.8.5
+        version: 7.8.5
       swagger-typescript-api:
         specifier: ^13.12.6
         version: 13.12.6(magicast@0.5.3)
@@ -686,6 +689,9 @@ packages:
 
   '@podman-desktop/api@1.28.3':
     resolution: {integrity: sha512-RCYrD90VfVn59oa8vTaDXj8Qy9BD0jxyiTNBhKNcloYf1hBCDMIKgqTcXYgNq15/5P1aGjRmgaG/jnhDEuux/g==}
+
+  '@podman-desktop/api@1.29.0-next.202607210731-f5075de':
+    resolution: {integrity: sha512-3iuii/As3CmxUI4IKTIFBw879D2VttGCy6iGrur51VR13mjbFJf/AalbNDbeSMSWB11bxW4dTviK3pO7xzpVFA==}
 
   '@podman-desktop/grype-extension-api@0.1.0-next.202604011405-f6be4bb':
     resolution: {integrity: sha512-xQsDP8zDUCwjg7TFA/ZYqmS4pwA3lHKNRq7b01lBWaFwYokXRZCdN5+bvIt/Mxt58/wHzFN8ja+drXRHOk3kAw==}
@@ -3075,21 +3081,6 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  semver@7.7.4:
-    resolution: {integrity: sha512-vFKC2IEtQnVhpT78h1Yp8wzwrf8CM+MzKMHGJZfBtzhZNycRFnXsHk6E5TxIkkMsgNS7mdX3AGB7x2QM2di4lA==}
-    engines: {node: '>=10'}
-    hasBin: true
-
-  semver@7.8.2:
-    resolution: {integrity: sha512-c8jsqUZm3omBOI66G90z1Dyw5z622G8oLG+omfsHBJf3CWQTlOcwOjvOG6wtiNfW6anKm/eA39LMwMtMez2TiQ==}
-    engines: {node: '>=10'}
-    hasBin: true
-
-  semver@7.8.3:
-    resolution: {integrity: sha512-wnilbGyMxzbY7dNOl7jpKbLSjcfeweJWU5j4+u5qW+6/wuGD9KzIGOyZnQVSBM9E7DtWaaH3CyHkppYrKYoxwg==}
-    engines: {node: '>=10'}
-    hasBin: true
-
   semver@7.8.5:
     resolution: {integrity: sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==}
     engines: {node: '>=10'}
@@ -3859,7 +3850,7 @@ snapshots:
       '@actions/core': 3.0.0
       '@actions/github': 9.1.0
       chalk: 4.1.2
-      semver: 7.7.4
+      semver: 7.8.5
       unplugin: 1.16.1
       zod: 3.25.76
 
@@ -4207,6 +4198,8 @@ snapshots:
       typescript: 5.9.3
 
   '@podman-desktop/api@1.28.3': {}
+
+  '@podman-desktop/api@1.29.0-next.202607210731-f5075de': {}
 
   '@podman-desktop/grype-extension-api@0.1.0-next.202604011405-f6be4bb':
     dependencies:
@@ -5642,7 +5635,7 @@ snapshots:
       lodash.merge: 4.6.2
       minimatch: 10.2.5
       scslre: 0.3.0
-      semver: 7.7.4
+      semver: 7.8.5
       ts-api-utils: 2.5.0(typescript@5.9.3)
       typescript: 5.9.3
 
@@ -5680,7 +5673,7 @@ snapshots:
       jsesc: 3.1.0
       pluralize: 8.0.0
       regjsparser: 0.13.1
-      semver: 7.8.3
+      semver: 7.8.5
       strip-indent: 4.1.1
 
   eslint-scope@5.1.1:
@@ -6736,12 +6729,6 @@ snapshots:
       lru-cache: 6.0.0
     optional: true
 
-  semver@7.7.4: {}
-
-  semver@7.8.2: {}
-
-  semver@7.8.3: {}
-
   semver@7.8.5: {}
 
   set-cookie-parser@3.1.2: {}
@@ -6943,7 +6930,7 @@ snapshots:
       postcss: 8.5.15
       postcss-scss: 4.0.9(postcss@8.5.15)
       postcss-selector-parser: 7.1.1
-      semver: 7.8.2
+      semver: 7.8.5
     optionalDependencies:
       svelte: 5.56.7(@typescript-eslint/types@8.65.0)
 
