@@ -18,7 +18,7 @@
 
 import '@testing-library/jest-dom/vitest';
 
-import { render, screen } from '@testing-library/svelte';
+import { render } from '@testing-library/svelte';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import type { OptimisationReport } from '@podman-desktop/extension-hummingbird-core-api';
 import Page from './+page.svelte';
@@ -32,7 +32,7 @@ beforeEach(() => {
 
 describe('when grype is not installed', () => {
   test('should display install prompt', () => {
-    render(Page, {
+    const { getByLabelText } = render(Page, {
       data: {
         engineId: 'podman',
         image: 'nginx:latest',
@@ -45,12 +45,12 @@ describe('when grype is not installed', () => {
       },
     });
 
-    const emptyScreen = screen.getByLabelText('You need to install Grype to use this feature');
+    const emptyScreen = getByLabelText('You need to install Grype to use this feature');
     expect(emptyScreen).toBeInTheDocument();
   });
 
   test('should render the ExtensionBanner', () => {
-    render(Page, {
+    const { getByLabelText } = render(Page, {
       data: {
         engineId: 'podman',
         image: 'nginx:latest',
@@ -63,14 +63,14 @@ describe('when grype is not installed', () => {
       },
     });
 
-    const banner = screen.getByLabelText('Grype');
+    const banner = getByLabelText('Grype');
     expect(banner).toBeInTheDocument();
   });
 });
 
 describe('when grype is installed', () => {
   test('should show loading text while report is pending', () => {
-    render(Page, {
+    const { getByText } = render(Page, {
       data: {
         engineId: 'podman',
         image: 'nginx:latest',
@@ -83,11 +83,11 @@ describe('when grype is installed', () => {
       },
     });
 
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(getByText('Loading...')).toBeInTheDocument();
   });
 
   test('should show error screen when report promise rejects', async () => {
-    render(Page, {
+    const { getByLabelText } = render(Page, {
       data: {
         engineId: 'podman',
         image: 'nginx:latest',
@@ -100,7 +100,7 @@ describe('when grype is installed', () => {
       },
     });
 
-    const errorScreen = await vi.waitFor(() => screen.getByLabelText('Error loading optimisation report'));
+    const errorScreen = await vi.waitFor(() => getByLabelText('Error loading optimisation report'));
     expect(errorScreen).toBeInTheDocument();
   });
 });
