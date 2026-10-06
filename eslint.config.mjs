@@ -54,7 +54,7 @@ export default [
       '**/__mocks__/',
       '**/coverage/',
       '**/html/',
-      'packages/backend/media/**',
+      'packages/extension/media/**',
       '**/.svelte-kit/',
       'scripts/**',
       '**/generated/',
@@ -174,21 +174,7 @@ export default [
       'sonarjs/no-unused-expressions': 'off',
       'redundant-undefined/redundant-undefined': 'error',
       'import/no-extraneous-dependencies': 'error',
-      'import/no-restricted-paths': [
-        'error',
-        {
-          zones: [
-            {
-              target: './packages/backend/**/*',
-              from: ['./packages/frontend/**/*'],
-            },
-            {
-              target: './packages/frontend/**/*',
-              from: ['./packages/backend/**/*'],
-            },
-          ],
-        },
-      ],
+      // client code importing server code (#lib/server) is rejected by SvelteKit at build time
 
       // disabled as code in this project is not yet compliant:
       'svelte/valid-compile': 'off',
@@ -265,21 +251,13 @@ export default [
   },
 
   {
-    files: ['packages/frontend/**'],
+    // code running in the webview
+    files: ['packages/extension/src/**'],
+    ignores: ['packages/extension/src/lib/server/**', 'packages/extension/src/**/*.remote.ts'],
     languageOptions: {
       globals: {
         ...Object.fromEntries(Object.entries(globals.node).map(([key]) => [key, 'off'])),
         ...globals.browser,
-      },
-    },
-  },
-
-  {
-    files: ['packages/shared/**'],
-    languageOptions: {
-      globals: {
-        ...Object.fromEntries(Object.entries(globals.node).map(([key]) => [key, 'off'])),
-        ...Object.fromEntries(Object.entries(globals.browser).map(([key]) => [key, 'off'])),
       },
     },
   },

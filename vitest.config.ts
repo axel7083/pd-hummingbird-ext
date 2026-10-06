@@ -19,7 +19,7 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
-    projects: ['packages/*/vitest.config.ts'],
+    projects: ['packages/extension/vite.config.ts', 'packages/sveltekit-adapter/vitest.config.ts'],
     // use GitHub action reporters when running in CI
     reporters: process.env.GITHUB_ACTIONS ? ['github-actions', 'default'] : ['default'],
     coverage: {

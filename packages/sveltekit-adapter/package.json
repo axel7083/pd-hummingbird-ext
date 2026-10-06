@@ -1,0 +1,30 @@
+{
+  "name": "@podman-desktop/sveltekit-adapter",
+  "description": "SvelteKit adapter running the SvelteKit server inside a Podman Desktop extension, and the app in its webview",
+  "version": "0.1.0-next",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "exports": {
+    ".": "./src/index.ts",
+    "./client": "./src/client.ts",
+    "./server": "./src/server.ts",
+    "./runtime": "./src/runtime.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@podman-desktop/api": "^1.29.0",
+    "@sveltejs/kit": "^3.0.0",
+    "vite": "^8.0.0"
+  },
+  "devDependencies": {
+    "@podman-desktop/api": "^1.29.1",
+    "@sveltejs/kit": "^3.0.1",
+    "@types/node": "^24",
+    "vite": "^8.3.2",
+    "vitest": "^5.0.3"
+  }
+}

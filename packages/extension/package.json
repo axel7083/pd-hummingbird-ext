@@ -1,0 +1,69 @@
+{
+  "name": "hummingbird",
+  "displayName": "Hummingbird",
+  "description": "Hummingbird extension",
+  "version": "0.3.0-next",
+  "icon": "icon.png",
+  "publisher": "redhat",
+  "type": "module",
+  "license": "Apache-2.0",
+  "engines": {
+    "podman-desktop": ">=1.29.0"
+  },
+  "main": "./dist/extension.cjs",
+  "imports": {
+    "#lib/*": "./src/lib/*",
+    "#routes/*": "./src/routes/*"
+  },
+  "scripts": {
+    "build": "vite build",
+    "watch": "vite --mode development build -w",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "format:check": "prettier --check \"src/**/*.{ts,svelte}\"",
+    "format:fix": "prettier --write \"src/**/*.{ts,svelte}\""
+  },
+  "contributes": {},
+  "dependencies": {
+    "inversify": "^7.11.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@codecov/vite-plugin": "^2.0.1",
+    "@fortawesome/fontawesome-free": "^7.3.1",
+    "@fortawesome/free-brands-svg-icons": "^7.3.1",
+    "@fortawesome/free-regular-svg-icons": "^7.3.1",
+    "@fortawesome/free-solid-svg-icons": "^7.3.1",
+    "@podman-desktop/api": "^1.29.1",
+    "@podman-desktop/grype-extension-api": "^0.1.0-next.202604011405-f6be4bb",
+    "@podman-desktop/sveltekit-adapter": "workspace:^",
+    "@podman-desktop/ui-svelte": "^1.29.1",
+    "@sveltejs/kit": "^3.0.1",
+    "@sveltejs/vite-plugin-svelte": "7.3.1",
+    "@tailwindcss/typography": "^0.5.20",
+    "@tailwindcss/vite": "^4.3.3",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/svelte": "^5.4.2",
+    "@testing-library/user-event": "^14.6.7",
+    "@tsconfig/svelte": "^5.0.8",
+    "@types/humanize-duration": "^3.27.4",
+    "@types/node": "^24",
+    "autoprefixer": "^10.6.1",
+    "filesize": "^11.0.25",
+    "jsdom": "^30.1.1",
+    "prettier": "^3.9.9",
+    "prettier-plugin-svelte": "^4.1.1",
+    "svelte": "5.57.1",
+    "svelte-check": "^4.7.6",
+    "svelte-fa": "^4.0.4",
+    "svelte-markdown": "^0.4.1",
+    "svelte-select": "^6.0.0",
+    "swagger-typescript-api": "^13.13.0",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.2",
+    "vitest": "^5.0.3"
+  }
+}

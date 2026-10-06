@@ -1,0 +1,45 @@
+/**********************************************************************
+ * Copyright (C) 2026 Red Hat, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ ***********************************************************************/
+import type { PageLoad } from './$types';
+import type { ImageSummary, LocalContainer, LocalImage } from '#lib/models/index.ts';
+import { getContainer } from '#lib/remote/containers.remote.ts';
+import { getImage } from '#lib/remote/images.remote.ts';
+import { getAlternative } from '#lib/remote/alternatives.remote.ts';
+
+interface Data {
+  container: Promise<LocalContainer>;
+  alternative: Promise<ImageSummary>;
+  localImage: Promise<Omit<LocalImage, 'containers'>>;
+}
+
+export const load: PageLoad = async ({ params }): Promise<Data> => {
+  const container: Promise<LocalContainer> = getContainer({ engineId: params.engineId, containerId: params.id });
+
+  const localImage: Promise<Omit<LocalImage, 'containers'>> = container.then(({ engineId, imageID }) =>
+    getImage({ engineId, imageId: imageID }),
+  );
+  const alternative: Promise<ImageSummary> = container.then(({ engineId, imageID }) =>
+    getAlternative({ engineId, imageId: imageID }),
+  );
+
+  return {
+    container,
+    alternative,
+    localImage,
+  };
+};

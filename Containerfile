@@ -31,11 +31,11 @@ RUN pnpm build
 
 FROM scratch
 
-COPY --from=builder /app/packages/backend/dist/ /extension/dist
-COPY --from=builder /app/packages/backend/package.json /extension/
-COPY --from=builder /app/packages/backend/media/ /extension/media
+COPY --from=builder /app/packages/extension/dist/ /extension/dist
+COPY --from=builder /app/packages/extension/package.json /extension/
+COPY --from=builder /app/packages/extension/media/ /extension/media
 COPY --from=builder /app/LICENSE /extension/
-COPY --from=builder /app/packages/backend/icon.png /extension/
+COPY --from=builder /app/packages/extension/icon.png /extension/
 COPY --from=builder /app/README.md /extension/
 
 LABEL org.opencontainers.image.title="Hummingbird Extension" \

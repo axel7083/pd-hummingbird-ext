@@ -62,13 +62,9 @@ jobs:
 
           # Add the new version in package.json file
           sed -i  "s#version\":\ \"\(.*\)\",#version\":\ \"${{ steps.TAG_UTIL.outputs.extVersion }}\",#g" package.json
-          sed -i  "s#version\":\ \"\(.*\)\",#version\":\ \"${{ steps.TAG_UTIL.outputs.extVersion }}\",#g" packages/backend/package.json
-          sed -i  "s#version\":\ \"\(.*\)\",#version\":\ \"${{ steps.TAG_UTIL.outputs.extVersion }}\",#g" packages/frontend/package.json
-          sed -i  "s#version\":\ \"\(.*\)\",#version\":\ \"${{ steps.TAG_UTIL.outputs.extVersion }}\",#g" packages/shared/package.json
+          sed -i  "s#version\":\ \"\(.*\)\",#version\":\ \"${{ steps.TAG_UTIL.outputs.extVersion }}\",#g" packages/extension/package.json
           git add package.json
-          git add packages/backend/package.json
-          git add packages/frontend/package.json
-          git add packages/shared/package.json
+          git add packages/extension/package.json
 
           # commit the changes
           git commit -m "chore: 🥁 tagging ${{ steps.TAG_UTIL.outputs.githubTag }} 🥳"
@@ -98,13 +94,9 @@ jobs:
           bumpedBranchName="bump-to-${bumpedVersion}"
           git checkout -b "${bumpedBranchName}"
           sed -i  "s#version\":\ \"\(.*\)\",#version\":\ \"${bumpedVersion}-next\",#g" package.json
-          sed -i  "s#version\":\ \"\(.*\)\",#version\":\ \"${bumpedVersion}-next\",#g" packages/backend/package.json
-          sed -i  "s#version\":\ \"\(.*\)\",#version\":\ \"${bumpedVersion}-next\",#g" packages/frontend/package.json
-          sed -i  "s#version\":\ \"\(.*\)\",#version\":\ \"${bumpedVersion}-next\",#g" packages/shared/package.json
+          sed -i  "s#version\":\ \"\(.*\)\",#version\":\ \"${bumpedVersion}-next\",#g" packages/extension/package.json
           git add package.json
-          git add packages/backend/package.json
-          git add packages/frontend/package.json
-          git add packages/shared/package.json
+          git add packages/extension/package.json
           git commit -s --amend -m "chore: bump version to ${bumpedVersion}"
           git push origin "${bumpedBranchName}"
           echo -e "📢 Bump version to ${bumpedVersion}\n\n${{ steps.TAG_UTIL.outputs.extVersion }} has been released.\n\n Time to switch to the new ${bumpedVersion} version 🥳" > /tmp/pr-title
