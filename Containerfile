@@ -22,7 +22,7 @@ USER 0
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN npm i -g corepack@0.31.0 && corepack enable
+RUN npm i -g corepack@0.36.0 && corepack enable
 
 COPY . /app
 WORKDIR /app
